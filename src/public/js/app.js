@@ -35,8 +35,6 @@ function handleNickNameSubmit(event){
 function showRoom() {
     welcome.hidden = true;
     room.hidden = false;
-    const h3 = room.querySelector("h3");
-    h3.innerText = `Room ${roomName}`;
     const msgForm = room.querySelector("#msg");
     const nameForm = room.querySelector("#name");
 
@@ -44,6 +42,10 @@ function showRoom() {
     msgForm.addEventListener("submit", handleMessageSubmit)
 }
 
+function setRoomTitle(roomName, newCount){
+    const h3 = room.querySelector("h3");
+    h3.innerText = `Room ${roomName} (${newCount})`;
+}
 
 function handleRoomSubmit(event) {
     event.preventDefault();
@@ -57,17 +59,22 @@ function handleRoomSubmit(event) {
 
 form.addEventListener("submit", handleRoomSubmit)
 
-socket.on("welcome", (user) => {
-
+socket.on("welcome", (user, newCount) => {
+    setRoomTitle(roomName,newCount);
     addMessage(`${user} joined`); 
 })
 
-socket.on("bye", (user) => {
+socket.on("bye", (user, newCount) => {
+    setRoomTitle(roomName,newCount);
     addMessage(`${user} left ㅜㅜ`)
 })
 
 socket.on("new_message", (msg) => {
     addMessage(msg)
+})
+
+socket.on("roomCount", (roomCount) => {
+    setRoomTitle(roomName,roomCount);
 })
 
 socket.on("room_change", (rooms) => {
