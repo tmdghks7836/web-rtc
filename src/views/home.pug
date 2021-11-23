@@ -16,10 +16,11 @@ html(lang="en")
                     button enter room
             div#call
                 div#myStream
-                video#myFace(autoplay, playsinLIne,width="400",height="400")
-                button#mute mute
-                button#camera Turn camera off
-                select#cameras Face Camera
-               
+                    video#myFace(autoplay, playsinLIne,width="400",height="400")
+                    button#mute mute
+                    button#camera Turn camera off
+                    select#cameras Face Camera
+                div#peersStream
+                    video#peersFace(autoplay, playsinLIne,width="400",height="400")
     script(src="/socket.io/socket.io.js")
     script(src="/public/js/app.js")
